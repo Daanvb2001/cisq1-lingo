@@ -8,8 +8,8 @@ public class Feedback {
     private List<Mark> marks;
     private String attempt;
 
-    public Feedback(String attempt) {
-        this.marks = new ArrayList<>();
+    public Feedback(String attempt, List<Mark> marks) {
+        this.marks = marks;
         this.attempt = attempt;
     }
 
@@ -21,40 +21,21 @@ public class Feedback {
         return this.marks.stream().allMatch(Mark.INVALID::equals);
     }
 
-    public void fillMarks(String attempt, String wordToGuess){
-        if (attempt.length()<wordToGuess.length()||attempt.length()>wordToGuess.length()){
-            for (int i = 0; i < wordToGuess.length(); i++) {
-                marks.add(Mark.INVALID);
-            }
-        }else {
-            for (int i = 0; i < wordToGuess.length(); i++) {
-                if (attempt.charAt(i)==wordToGuess.charAt(i)) {
-                    marks.add(Mark.CORRECT);
-                }else if(wordToGuess.contains(String.valueOf(attempt.charAt(i)))){
-                    marks.add(Mark.PRESENT);
-                }else if (!wordToGuess.contains(String.valueOf(attempt.charAt(i)))){
-                    marks.add(Mark.ABSENT);
-                }
-            }
-        }
-    }
 
-    public String giveHint(String wordToGuess, String previousHint){
+    public String giveHint(String previousHint, String wordToGuess){
         String hint = "";
-        fillMarks(this.attempt, wordToGuess);
             for (int i = 0; i < wordToGuess.length(); i++) {
-                if (!String.valueOf(previousHint.charAt(i)).equals(".")){
-                    hint+=previousHint.charAt(i);
-                }else{
                     if (marks.get(i) == Mark.CORRECT) {
                         hint += this.attempt.charAt(i);
+                    }else if (!String.valueOf(previousHint.charAt(i)).equals(".")) {
+                        hint += previousHint.charAt(i);
                     } else {
                         hint += ".";
-                    }
                 }
             }
         return hint;
     }
+
 
     @Override
     public boolean equals(Object o) {

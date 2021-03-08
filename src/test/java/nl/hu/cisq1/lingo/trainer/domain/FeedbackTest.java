@@ -14,9 +14,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class FeedbackTest {
     private static Stream<Arguments> provideHintExamples() {
         return Stream.of(
-                Arguments.of("brood", "baard", "b....", "b...d"),
-                Arguments.of("brand", "baard","b...d", "b.a.d"),
-                Arguments.of("baard", "baard","b.a.d", "baard")
+                Arguments.of("brood", "baard", List.of(Mark.CORRECT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.CORRECT) ,"b....", "b...d"),
+                Arguments.of("braden", "baard", List.of(Mark.INVALID, Mark.INVALID, Mark.INVALID, Mark.INVALID, Mark.INVALID) ,"b...d", "b...d"),
+                Arguments.of("brand", "baard", List.of(Mark.CORRECT, Mark.PRESENT, Mark.CORRECT, Mark.ABSENT, Mark.CORRECT) ,"b...d", "b.a.d"),
+                Arguments.of("baard", "baard", List.of(Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT) ,"b.a.d", "baard")
                 );
     }
 //
@@ -77,11 +78,11 @@ class FeedbackTest {
     @ParameterizedTest
     @DisplayName("correct guess")
     @MethodSource("provideHintExamples")
-    void givehintTest(String attempt, String wordToGuess, String previousHint, String result){
-        Feedback feedbackA=new Feedback(attempt);
+    void givehintTest(String attempt, String wordToGuess, List<Mark> marks, String previousHint, String result){
+        Feedback feedbackA=new Feedback(attempt, marks);
         Round round=new Round(wordToGuess);
 //        feedbackA.giveHint();
-        assertEquals(result,feedbackA.giveHint(wordToGuess,previousHint));
+        assertEquals(result,feedbackA.giveHint(previousHint, wordToGuess));
     }
 
 }
