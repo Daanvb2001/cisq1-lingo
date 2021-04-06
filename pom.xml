@@ -63,6 +63,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.20</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -71,6 +77,10 @@
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
                 <version>1.6.2</version>
+                <configuration>
+                    <timestampedReports>false</timestampedReports>
+                    <mutationThreshold>90</mutationThreshold>
+                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.pitest</groupId>
@@ -110,19 +120,17 @@
                                         <limit>
                                             <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
-<!--                                            <minimum>0.90</minimum>-->
-                                            <minimum>0</minimum>
+                                            <minimum>0.90</minimum>
                                         </limit>
                                         <limit>
                                             <counter>BRANCH</counter>
                                             <value>COVEREDRATIO</value>
-<!--                                            <minimum>0.90</minimum>-->
-                                            <minimum>0</minimum>
+                                            <minimum>0.90</minimum>
                                         </limit>
                                         <limit>
                                             <counter>CLASS</counter>
                                             <value>MISSEDCOUNT</value>
-                                            <maximum>100</maximum>
+                                            <maximum>0</maximum>
                                         </limit>
                                     </limits>
                                 </rule>

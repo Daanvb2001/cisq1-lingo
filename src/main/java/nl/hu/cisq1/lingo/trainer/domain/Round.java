@@ -1,56 +1,56 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import lombok.Getter;
+import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidException;
+import nl.hu.cisq1.lingo.trainer.domain.exceptions.NotPlayingException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Round {
-    private List<Feedback> attempts;
+    private List<Feedback> history;
+    private List<String> attempts;
     private String wordToGuess;
-
-
+    private GameState state;
 
     public Round(String wordToGuess) {
+        this.history = new ArrayList<>();
         this.attempts = new ArrayList<>();
         this.wordToGuess = wordToGuess;
+        this.state= GameState.PLAYING;
+        firsthint();
     }
 
-//    public List<String> getAttempts() {
-//        return attempts;
-//    }
-
-//    public void addFeedback(){
-//        feedback.add(new Feedback(attempt,feedback.getWo))
-//    }
-
-//    public void addFeedback(){
-//        attempts.;
-//    }
-
-    public List<Mark> fillMarks(String attempt){
-        List<Mark> marks = new ArrayList<>();
-        if (attempt.length()<wordToGuess.length()||attempt.length()>wordToGuess.length()){
-            for (int i = 0; i < wordToGuess.length(); i++) {
-                marks.add(Mark.INVALID);
-            }
-        }else {
-            for (int i = 0; i < wordToGuess.length(); i++) {
-                if (attempt.charAt(i)==wordToGuess.charAt(i)) {
-                    marks.add(Mark.CORRECT);
-                }else if(wordToGuess.contains(String.valueOf(attempt.charAt(i)))){
-                    marks.add(Mark.PRESENT);
-                }else if (!wordToGuess.contains(String.valueOf(attempt.charAt(i)))){
-                    marks.add(Mark.ABSENT);
-                }
-            }
+    public String guess(String attempt){
+        if (state != GameState.PLAYING){
+            throw new NotPlayingException("Not in a game!");
         }
-        Feedback feedback = new Feedback(attempt, marks);
-        this.attempts.add(feedback);
-        return marks;
+        String hint = "";
+        Feedback feedback = new Feedback(attempt, wordToGuess);
+        this.history.add(feedback);
+        if (feedback.isWordGuessed()){
+            state=GameState.WIN;
+        } else if (attempts.size()==5){
+            state=GameState.ELIMINATED;
+        }
+        hint=feedback.getHint(attempts.get(attempts.size()-1));
+        this.attempts.add(hint);
+        return hint;
     }
 
-    public void getFeedback(String attempt) {
-        Feedback feedback = new Feedback(attempt, fillMarks(attempt));
-        attempts.add(feedback);
+    public String firsthint(){
+        String wordToGuessLength = ".";
+        String hint= wordToGuess.charAt(0) + wordToGuessLength.repeat(wordToGuess.length()-1);
+        this.attempts.add(hint);
+        return hint;
+    }
+
+    public GameState getState() {
+        return state;
+    }
+
+    public List<String> getAttempts() {
+        return attempts;
     }
 }
 
