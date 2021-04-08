@@ -1,7 +1,7 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.AlreadyPlayingException;
-import nl.hu.cisq1.lingo.trainer.domain.exceptions.NoGameActive;
+import nl.hu.cisq1.lingo.trainer.domain.exceptions.NoGameActiveException;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.WrongWordLengthException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -102,7 +102,7 @@ class GameTest {
     @Test
     @DisplayName("No Game active")
     void NoGameActive(){
-        assertThrows(NoGameActive.class,()->game.guess("baard"));
+        assertThrows(NoGameActiveException.class,()->game.guess("baard"));
     }
 
     @Test

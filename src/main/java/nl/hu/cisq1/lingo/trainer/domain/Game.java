@@ -1,16 +1,28 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.AlreadyPlayingException;
-import nl.hu.cisq1.lingo.trainer.domain.exceptions.NoGameActive;
+import nl.hu.cisq1.lingo.trainer.domain.exceptions.NoGameActiveException;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.WrongWordLengthException;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name="game")
 public class Game {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     private int score;
     private int wordLength;
-    private List<Round> rounds;
+
+    @OneToMany
+    @Cascade(CascadeType.ALL)
+    private final List<Round> rounds;
 
     public Game() {
         this.score = 0;
@@ -18,7 +30,7 @@ public class Game {
         this.wordLength=5;
     }
 
-    public void startRound(String wordToGuess){
+    public Progress startRound(String wordToGuess){
         if (wordToGuess.length()!=wordLength){
             throw new WrongWordLengthException("Word has the wrong length!");
         }
@@ -30,17 +42,21 @@ public class Game {
         Round round = new Round(wordToGuess);
         this.rounds.add(round);
         amountOfCharacters();
+
+        return getProgress();
     }
 
-    public void guess(String attempt){
+    public Progress guess(String attempt){
         if (rounds.isEmpty()){
-            throw new NoGameActive("There is no active game");
+            throw new NoGameActiveException("There is no active game");
         }
         Round round = rounds.get(rounds.size()-1);
         round.guess(attempt);
+
+        return getProgress();
     }
 
-    public void amountOfCharacters(){
+    public int amountOfCharacters(){
         if (wordLength==5){
             wordLength=6;
         } else if (wordLength==6){
@@ -48,6 +64,7 @@ public class Game {
         } else if (wordLength==7){
             wordLength=5;
         }
+        return wordLength;
     }
 
     public int playerScore(){
@@ -60,5 +77,25 @@ public class Game {
         }
         score=tempscore;
         return score;
+    }
+
+    public Round getRound() {
+        if (rounds.size()==0){
+            return null;
+        }else {
+            return this.rounds.get(rounds.size()-1);
+        }
+    }
+
+    public Progress getProgress(){
+        return new Progress(id, getRound().getState(), getRound().getWordToGuess(), playerScore(), getRound().getAttempts().get(getRound().getAttempts().size()-1),getRound().getHistory());
+    }
+
+    public int getWordLength() {
+        return wordLength;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

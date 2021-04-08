@@ -3,17 +3,27 @@ package nl.hu.cisq1.lingo.trainer.domain;
 import lombok.ToString;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidException;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @ToString
+@Entity
 public class Feedback {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    @ElementCollection
     private List<Mark> marks;
     private String attempt;
     private String wordToGuess;
 
-    public Feedback(String attempt,String wordToGuess ) {
+    public Feedback() {
+    }
+
+    public Feedback(String attempt, String wordToGuess ) {
         this.wordToGuess=wordToGuess;
         this.attempt = attempt;
         this.marks=fillMarks();
