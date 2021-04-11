@@ -20,7 +20,7 @@
         <sonar.projectKey>Daanvb2001_cisq1-lingo</sonar.projectKey>
         <sonar.organization>daanvb2001</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.exclusions>**/LingoApplication.java, **/application/GlobalExceptionHandler.java, **/domain/progress.java</sonar.exclusions>
+        <sonar.exclusions>**/LingoApplication.java, **GlobalExceptionHandler.java, **/domain/progress.java</sonar.exclusions>
     </properties>
 
     <dependencies>
@@ -116,12 +116,12 @@
                                         <limit>
                                             <counter>INSTRUCTION</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.85</minimum>
+                                            <minimum>0.90</minimum>
                                         </limit>
                                         <limit>
                                             <counter>BRANCH</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.85</minimum>
+                                            <minimum>0.90</minimum>
                                         </limit>
                                         <limit>
                                             <counter>CLASS</counter>
