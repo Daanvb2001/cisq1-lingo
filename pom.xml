@@ -148,8 +148,8 @@
                         <configuration>
                             <excludes>
                                 <exclude>**/LingoApplication.*</exclude>
-                                <exclude>**/trainer/domain/Progress.class</exclude>
-                                <exclude>**/trainer/presentation/GlobalExceptionHandler.class</exclude>
+                                <exclude>**/trainer/domain/Progress.*</exclude>
+                                <exclude>**/trainer/presentation/GlobalExceptionHandler.*</exclude>
                             </excludes>
                         </configuration>
                     </execution>
