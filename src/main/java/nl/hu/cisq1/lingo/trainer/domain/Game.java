@@ -2,6 +2,7 @@ package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.AlreadyPlayingException;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.NoGameActiveException;
+import nl.hu.cisq1.lingo.trainer.domain.exceptions.NotPlayingException;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.WrongWordLengthException;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -43,7 +44,7 @@ public class Game {
         return getProgress();
     }
 
-    public Progress guess(String attempt){
+    public Progress guess(String attempt) throws NoGameActiveException, NotPlayingException {
         if (rounds.isEmpty()){
             throw new NoGameActiveException("There is no active game");
         }

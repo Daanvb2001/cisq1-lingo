@@ -1,6 +1,8 @@
 package nl.hu.cisq1.lingo.trainer.domain.exceptions;
 
-public class IdNotFoundException extends RuntimeException{
+import javassist.NotFoundException;
+
+public class IdNotFoundException extends NotFoundException {
     public IdNotFoundException(String msg) {
         super(msg);
     }

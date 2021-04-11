@@ -4,10 +4,7 @@ import nl.hu.cisq1.lingo.CiTestConfiguration;
 import nl.hu.cisq1.lingo.trainer.data.SpringGameRepository;
 import nl.hu.cisq1.lingo.trainer.domain.GameState;
 import nl.hu.cisq1.lingo.trainer.domain.Progress;
-import nl.hu.cisq1.lingo.trainer.domain.exceptions.GameHasEndedException;
-import nl.hu.cisq1.lingo.trainer.domain.exceptions.IdNotFoundException;
-import nl.hu.cisq1.lingo.trainer.domain.exceptions.NoRoundStartedException;
-import nl.hu.cisq1.lingo.trainer.domain.exceptions.NotPlayingException;
+import nl.hu.cisq1.lingo.trainer.domain.exceptions.*;
 import nl.hu.cisq1.lingo.words.data.SpringWordRepository;
 import nl.hu.cisq1.lingo.words.domain.Word;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +41,7 @@ class GameServiceIntegrationTest {
 
     @Test
     @DisplayName("test newRound happy path")
-    void newRound(){
+    void newRound() throws IdNotFoundException {
         Progress startRound = gameService.startNewRound(id);
 
         assertEquals(GameState.PLAYING, startRound.getGameState());
@@ -55,7 +52,7 @@ class GameServiceIntegrationTest {
 
     @Test
     @DisplayName("test win")
-    void guessWin(){
+    void guessWin() throws IdNotFoundException, NoGameActiveException, NotPlayingException, NoRoundStartedException {
         Progress startRound = gameService.startNewRound(id);
         Progress guess = gameService.guess(id, "appel");
 
@@ -71,7 +68,7 @@ class GameServiceIntegrationTest {
 
     @Test
     @DisplayName("test loss")
-    void guessloss(){
+    void guessloss() throws IdNotFoundException, NoGameActiveException, NotPlayingException, NoRoundStartedException {
         Progress startRound = gameService.startNewRound(id);
         gameService.guess(id,"breek");
         gameService.guess(id,"braak");

@@ -33,14 +33,11 @@ public class Feedback {
         return this.marks.stream().allMatch(mark -> mark.equals(Mark.CORRECT));
     }
 
-    public boolean isWordValid() {
-            throw new InvalidException("Guess is invalid");
-    }
 
     public List<Mark> fillMarks() throws InvalidException {
         List<Mark> marksList = new ArrayList<>();
         if (attempt.length()!=wordToGuess.length()){
-            isWordValid();
+            throw new InvalidException("guess is invalid");
         }else if(wordToGuess.equals(attempt)){
             for (int i = 0; i < wordToGuess.length(); i++) {
                 marksList.add(Mark.CORRECT);

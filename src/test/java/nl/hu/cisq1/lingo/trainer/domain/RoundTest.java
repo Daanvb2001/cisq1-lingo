@@ -17,7 +17,7 @@ class RoundTest {
 
     @Test
     @DisplayName("check firstguess")
-    void firstGuess(){
+    void firstGuess() throws NotPlayingException {
         Round round =new Round("baard");
         assertEquals("b...d", round.guess("breed"));
     }
@@ -31,7 +31,7 @@ class RoundTest {
 
     @Test
     @DisplayName("check to many guessess.")
-    void StateEliminated(){
+    void StateEliminated() throws NotPlayingException {
         Round round =new Round("baard");
         round.guess("breek");
         round.guess("braak");
@@ -43,7 +43,7 @@ class RoundTest {
 
     @Test
     @DisplayName("Game win")
-    void stateWin(){
+    void stateWin() throws NotPlayingException {
         Round round =new Round("baard");
         round.guess("breek");
         round.guess("braak");
@@ -55,7 +55,7 @@ class RoundTest {
 
     @Test
     @DisplayName("game not found")
-    void stateNotPlaying(){
+    void stateNotPlaying() throws NotPlayingException {
         Round round =new Round("baard");
         round.guess("breek");
         round.guess("braak");

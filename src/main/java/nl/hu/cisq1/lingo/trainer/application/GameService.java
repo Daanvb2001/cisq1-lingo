@@ -4,9 +4,7 @@ import nl.hu.cisq1.lingo.trainer.data.SpringGameRepository;
 import nl.hu.cisq1.lingo.trainer.domain.Game;
 import nl.hu.cisq1.lingo.trainer.domain.GameState;
 import nl.hu.cisq1.lingo.trainer.domain.Progress;
-import nl.hu.cisq1.lingo.trainer.domain.exceptions.GameHasEndedException;
-import nl.hu.cisq1.lingo.trainer.domain.exceptions.NoRoundStartedException;
-import nl.hu.cisq1.lingo.trainer.domain.exceptions.IdNotFoundException;
+import nl.hu.cisq1.lingo.trainer.domain.exceptions.*;
 import nl.hu.cisq1.lingo.words.application.WordService;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +34,7 @@ public class GameService {
         return progress;
     }
 
-    public Progress guess(Long id, String attempt) throws IdNotFoundException, NoRoundStartedException, GameHasEndedException{
+    public Progress guess(Long id, String attempt) throws IdNotFoundException, NoRoundStartedException, GameHasEndedException, NoGameActiveException, NotPlayingException {
         Game game = this.gameRepository.findById(id).orElseThrow(() -> new IdNotFoundException("Game not found"));
         if (game.getRound()==null){
             throw new NoRoundStartedException("There is no round found");

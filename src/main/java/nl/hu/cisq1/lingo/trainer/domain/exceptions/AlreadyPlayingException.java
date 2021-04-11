@@ -1,6 +1,8 @@
 package nl.hu.cisq1.lingo.trainer.domain.exceptions;
 
-public class AlreadyPlayingException extends RuntimeException {
+import org.springframework.dao.DuplicateKeyException;
+
+public class AlreadyPlayingException extends DuplicateKeyException {
     public AlreadyPlayingException(String msg) {
         super(msg);
     }

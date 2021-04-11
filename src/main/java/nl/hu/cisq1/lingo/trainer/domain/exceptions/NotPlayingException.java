@@ -1,6 +1,8 @@
 package nl.hu.cisq1.lingo.trainer.domain.exceptions;
 
-public class NotPlayingException extends RuntimeException{
+import javassist.NotFoundException;
+
+public class NotPlayingException extends NotFoundException {
     public NotPlayingException(String msg) {
         super(msg);
     }

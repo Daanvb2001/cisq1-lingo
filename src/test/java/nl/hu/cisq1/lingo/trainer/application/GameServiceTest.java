@@ -42,7 +42,7 @@ class GameServiceTest {
 
     @Test
     @DisplayName("Throws exception when a game is already playing")
-    void RoundAlreadyStarted(){
+    void RoundAlreadyStarted() throws IdNotFoundException {
         service.startNewRound(0L);
         assertThrows(AlreadyPlayingException.class, () -> service.startNewRound(0L));
     }
@@ -55,24 +55,10 @@ class GameServiceTest {
 
     @Test
     @DisplayName("Throws exception when a game has already ended")
-    void GuessingWhileGameWasEnded(){
+    void GuessingWhileGameWasEnded() throws IdNotFoundException, NoGameActiveException, NotPlayingException, NoRoundStartedException {
         service.startNewRound(0L);
         for (int i = 0; i <5; i++)
         service.guess(0L, "brood");
         assertThrows(GameHasEndedException.class, () -> service.guess(0L, "brood"));
     }
-
-
-
-
-//    @Test
-//    @DisplayName("Throws exception if game id is not found")
-//    void guessWord(){
-//        SpringGameRepository springGameRepository = mock(SpringGameRepository.class);
-//        SpringWordRepository springWordRepository = mock(SpringWordRepository.class);
-//        when(springGameRepository.findById(anyLong())).thenReturn(Optional.empty());
-//
-//        GameService gameService = new GameService(springWordRepository, springGameRepository)
-//
-//    }
 }

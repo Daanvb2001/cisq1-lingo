@@ -34,7 +34,7 @@ public class Round {
         firsthint();
     }
 
-    public String guess(String attempt){
+    public String guess(String attempt) throws NotPlayingException {
         if (state != GameState.PLAYING){
             throw new NotPlayingException("Not in a game!");
         }

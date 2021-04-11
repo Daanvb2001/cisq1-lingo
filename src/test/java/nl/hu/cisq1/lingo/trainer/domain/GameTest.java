@@ -2,6 +2,7 @@ package nl.hu.cisq1.lingo.trainer.domain;
 
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.AlreadyPlayingException;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.NoGameActiveException;
+import nl.hu.cisq1.lingo.trainer.domain.exceptions.NotPlayingException;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.WrongWordLengthException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +33,7 @@ class GameTest {
 
     @Test
     @DisplayName("round has correct amount of characters")
-    void nextRound(){
+    void nextRound() throws NoGameActiveException, NotPlayingException {
         game.startRound("baard");
         game.guess("baard");
         assertDoesNotThrow(()->game.startRound("braken"));
@@ -40,7 +41,7 @@ class GameTest {
 
     @Test
     @DisplayName("new wordToGuess has to many characters")
-    void nextRoundToManyCharacters(){
+    void nextRoundToManyCharacters() throws NoGameActiveException, NotPlayingException {
         game.startRound("baard");
         game.guess("baard");
         assertThrows(WrongWordLengthException.class,()->game.startRound("vechten"));
@@ -48,7 +49,7 @@ class GameTest {
 
     @Test
     @DisplayName("new wordToGuess has not enough characters")
-    void nextRoundNotEnoughCharacters(){
+    void nextRoundNotEnoughCharacters() throws NoGameActiveException, NotPlayingException {
         game.startRound("baard");
         game.guess("baard");
         assertThrows(WrongWordLengthException.class,()->game.startRound("baard"));
@@ -56,7 +57,7 @@ class GameTest {
 
     @Test
     @DisplayName("round has more characters after round win")
-    void nextRound7Characters(){
+    void nextRound7Characters() throws NoGameActiveException, NotPlayingException {
         game.startRound("baard");
         game.guess("baard");
         game.startRound("braken");
@@ -66,7 +67,7 @@ class GameTest {
 
     @Test
     @DisplayName("round stays at 6 characters after win")
-    void nextRound6InsteadOf7Characters(){
+    void nextRound6InsteadOf7Characters() throws NoGameActiveException, NotPlayingException {
         game.startRound("baard");
         game.guess("baard");
         game.startRound("braken");
@@ -77,7 +78,7 @@ class GameTest {
 
     @Test
     @DisplayName("round does not go to 8 characters")
-    void nextRound5Characters(){
+    void nextRound5Characters() throws NoGameActiveException, NotPlayingException {
         game.startRound("baard");
         game.guess("baard");
         game.startRound("braken");
@@ -89,7 +90,7 @@ class GameTest {
 
     @Test
     @DisplayName("round goes back to 5 characters")
-    void nextRoundnot8Characters(){
+    void nextRoundnot8Characters() throws NoGameActiveException, NotPlayingException {
         game.startRound("baard");
         game.guess("baard");
         game.startRound("braken");
@@ -107,7 +108,7 @@ class GameTest {
 
     @Test
     @DisplayName("player gets 25 points after win")
-    void get25Points(){
+    void get25Points() throws NoGameActiveException, NotPlayingException {
         game.startRound("baard");
         game.guess("baard");
         assertEquals(25,game.playerScore());
@@ -115,7 +116,7 @@ class GameTest {
 
     @Test
     @DisplayName("player gets 50 points after 2 wins")
-    void get50Points(){
+    void get50Points() throws NoGameActiveException, NotPlayingException {
         game.startRound("baard");
         game.guess("baard");
         game.startRound("braken");
@@ -125,7 +126,7 @@ class GameTest {
 
     @Test
     @DisplayName("player gets 30 points after 1 win with 1 attempt and 1 win with 5 attempts")
-    void get30Points(){
+    void get30Points() throws NoGameActiveException, NotPlayingException {
         game.startRound("baard");
         game.guess("breek");
         game.guess("braak");
@@ -139,7 +140,7 @@ class GameTest {
 
     @Test
     @DisplayName("player gets 25 points after 1 win and the eliminated")
-    void get25PointsAfterEliminated(){
+    void get25PointsAfterEliminated() throws NoGameActiveException, NotPlayingException {
         game.startRound("baard");
         game.guess("baard");
         game.startRound("braken");
@@ -153,7 +154,7 @@ class GameTest {
 
     @Test
     @DisplayName("player gets no points after eliminated")
-    void get0Points(){
+    void get0Points() throws NoGameActiveException, NotPlayingException {
         game.startRound("baard");
         game.guess("breek");
         game.guess("braak");
