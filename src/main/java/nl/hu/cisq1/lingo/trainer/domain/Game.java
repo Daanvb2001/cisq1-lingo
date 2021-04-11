@@ -33,10 +33,8 @@ public class Game {
         if (wordToGuess.length()!=wordLength){
             throw new WrongWordLengthException("Word has the wrong length!");
         }
-        if (!rounds.isEmpty()){
-            if (this.rounds.get(rounds.size()-1).getState()==GameState.PLAYING){
-                throw new AlreadyPlayingException("There is a game still active!");
-            }
+        if (!rounds.isEmpty() && this.rounds.get(rounds.size()-1).getState()==GameState.PLAYING){
+            throw new AlreadyPlayingException("There is a game still active!");
         }
         Round round = new Round(wordToGuess);
         this.rounds.add(round);

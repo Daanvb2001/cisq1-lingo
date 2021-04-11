@@ -38,25 +38,25 @@ public class Feedback {
     }
 
     public List<Mark> fillMarks() throws InvalidException {
-        List<Mark> marks = new ArrayList<>();
+        List<Mark> marksList = new ArrayList<>();
         if (attempt.length()!=wordToGuess.length()){
             isWordValid();
         }else if(wordToGuess.equals(attempt)){
             for (int i = 0; i < wordToGuess.length(); i++) {
-                marks.add(Mark.CORRECT);
+                marksList.add(Mark.CORRECT);
             }
         }else{
             for (int i = 0; i < wordToGuess.length(); i++) {
                 if (attempt.charAt(i)==wordToGuess.charAt(i)) {
-                    marks.add(Mark.CORRECT);
+                    marksList.add(Mark.CORRECT);
                 }else if(wordToGuess.contains(String.valueOf(attempt.charAt(i)))){
-                    marks.add(Mark.PRESENT);
+                    marksList.add(Mark.PRESENT);
                 }else if (!wordToGuess.contains(String.valueOf(attempt.charAt(i)))){
-                    marks.add(Mark.ABSENT);
+                    marksList.add(Mark.ABSENT);
                 }
             }
         }
-        return marks;
+        return marksList;
     }
 
     public String getHint(String previousHint){

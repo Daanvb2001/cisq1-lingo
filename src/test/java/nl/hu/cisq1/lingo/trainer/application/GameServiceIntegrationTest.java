@@ -27,12 +27,9 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @Import(CiTestConfiguration.class)
 @Transactional
-public class GameServiceIntegrationTest {
+class GameServiceIntegrationTest {
     @Autowired
     private GameService gameService;
-
-//    @MockBean
-//    private SpringGameRepository gameRepository;
 
     @MockBean
     private SpringWordRepository wordRepository;
@@ -50,10 +47,10 @@ public class GameServiceIntegrationTest {
     void newRound(){
         Progress startRound = gameService.startNewRound(id);
 
-        assertEquals(startRound.getGameState(), GameState.PLAYING);
-        assertEquals(startRound.getScore(), 0);
-        assertEquals(startRound.getWordToGuess().length(), 5);
-        assertEquals(startRound.getHint(), "a....");
+        assertEquals(GameState.PLAYING, startRound.getGameState());
+        assertEquals(0, startRound.getScore());
+        assertEquals(5, startRound.getWordToGuess().length());
+        assertEquals("a....", startRound.getHint());
     }
 
     @Test
@@ -62,8 +59,8 @@ public class GameServiceIntegrationTest {
         Progress startRound = gameService.startNewRound(id);
         Progress guess = gameService.guess(id, "appel");
 
-        assertEquals(guess.getGameState(), GameState.WIN);
-        assertEquals(guess.getScore(), 25);
+        assertEquals(GameState.WIN, guess.getGameState());
+        assertEquals(25, guess.getScore());
     }
 
     @Test
