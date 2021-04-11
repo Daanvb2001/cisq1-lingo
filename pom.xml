@@ -77,10 +77,6 @@
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
                 <version>1.6.2</version>
-                <configuration>
-                    <timestampedReports>false</timestampedReports>
-                    <mutationThreshold>90</mutationThreshold>
-                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.pitest</groupId>

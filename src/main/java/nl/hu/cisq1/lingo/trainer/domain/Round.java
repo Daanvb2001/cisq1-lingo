@@ -1,7 +1,5 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import lombok.Getter;
-import nl.hu.cisq1.lingo.trainer.domain.exceptions.InvalidException;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.NotPlayingException;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;

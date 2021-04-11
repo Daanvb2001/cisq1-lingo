@@ -20,10 +20,12 @@ public class GameController {
     public Long startGame(){
         return this.gameService.startNewGame();
     }
+
     @PostMapping("{id}/startround")
     public Progress startRound(@PathVariable Long id){
         return this.gameService.startNewRound(id);
     }
+
     @PostMapping("{id}/guess")
     public Progress guess(@PathVariable Long id, String attempt){
         return this.gameService.guess(id, attempt);

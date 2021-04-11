@@ -4,7 +4,6 @@ import nl.hu.cisq1.lingo.trainer.data.SpringGameRepository;
 import nl.hu.cisq1.lingo.trainer.domain.Game;
 import nl.hu.cisq1.lingo.trainer.domain.exceptions.*;
 import nl.hu.cisq1.lingo.words.application.WordService;
-import nl.hu.cisq1.lingo.words.data.SpringWordRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,8 +36,8 @@ class GameServiceTest {
     @Test
     @DisplayName("Throws exception when no game found")
     void noGameFound(){
-        assertThrows(idNotFoundException.class, () -> service.startNewRound(2L));
-        assertThrows(idNotFoundException.class, () -> service.guess(2L, ""));
+        assertThrows(IdNotFoundException.class, () -> service.startNewRound(2L));
+        assertThrows(IdNotFoundException.class, () -> service.guess(2L, ""));
     }
 
     @Test

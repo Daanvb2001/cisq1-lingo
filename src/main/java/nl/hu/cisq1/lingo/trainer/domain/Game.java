@@ -11,11 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="game")
 public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     private int score;
     private int wordLength;
@@ -80,7 +79,7 @@ public class Game {
     }
 
     public Round getRound() {
-        if (rounds.size()==0){
+        if (rounds.isEmpty()){
             return null;
         }else {
             return this.rounds.get(rounds.size()-1);
